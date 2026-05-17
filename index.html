@@ -201,7 +201,7 @@
     </div>
 
     <script>
-        const REPO_PATH = "xaxaxaxac/tracker-db"; 
+        const REPO_PATH = "xaxaxaxac/trackingwebsite"; 
         const DB_URL = `https://raw.githubusercontent.com/${REPO_PATH}/main/database.json`;
         let databaseData = {};
 
@@ -213,7 +213,7 @@
                 databaseData = await response.json();
                 renderCards(databaseData);
             } catch (error) {
-                container.innerHTML = `<div class="status-msg" style="color: #ff4444;">Error loading database. Make sure database.json exists in your new repository.</div>`;
+                container.innerHTML = `<div class="status-msg" style="color: #ff4444;">Error loading database. Connection with trackingwebsite/main/database.json failed.</div>`;
             }
         }
 
