@@ -202,18 +202,21 @@
 
     <script>
         const REPO_PATH = "xaxaxaxac/trackingwebsite"; 
-        const DB_URL = `https://raw.githubusercontent.com/${REPO_PATH}/main/database.json`;
-        let databaseData = {};
-
+        
         async function loadDatabase() {
             const container = document.getElementById("dbContainer");
+            // Генерация случайного ключа для обхода кэша во время каждого запроса
+            const cacheBuster = Math.random().toString(36).substring(2, 15);
+            const dbUrl = `https://raw.githubusercontent.com/${REPO_PATH}/main/database.json?v=${cacheBuster}`;
+
             try {
-                const response = await fetch(DB_URL + '?t=' + new Date().getTime());
-                if (!response.ok) throw new Error("File not found");
-                databaseData = await response.json();
+                const response = await fetch(dbUrl);
+                if (!response.ok) throw new Error("File status not 200");
+                const databaseData = await response.json();
                 renderCards(databaseData);
             } catch (error) {
-                container.innerHTML = `<div class="status-msg" style="color: #ff4444;">Error loading database. Connection with trackingwebsite/main/database.json failed.</div>`;
+                console.error(error);
+                container.innerHTML = `<div class="status-msg" style="color: #ff4444;">Error loading database. Please verify trackingwebsite/main/database.json stream.</div>`;
             }
         }
 
@@ -224,7 +227,7 @@
             const keys = Object.keys(data).reverse();
             
             if (keys.length === 0) {
-                container.innerHTML = `<div class="status-msg">No logs found in database.</div>`;
+                container.innerHTML = `<div class="status-msg">No entries found inside database registry.</div>`;
                 return;
             }
 
@@ -232,14 +235,14 @@
                 const item = data[id];
                 const card = document.createElement("div");
                 card.className = "card";
-                card.setAttribute("data-roblox", item.roblox_id);
+                card.setAttribute("data-roblox", String(item.roblox_id || ''));
                 card.innerHTML = `
                     <div class="player-info">
                         <div class="label">Roblox Target</div>
-                        <div class="val">${item.roblox_id}</div>
+                        <div class="val">${item.roblox_id || 'Unknown'}</div>
                     </div>
                     <div class="reason-info">
-                        ${item.reason}
+                        ${item.reason || 'No reason provided'}
                     </div>
                     <div class="actions">
                         <a href="player.html?id=${id}" class="btn">View Proof</a>
