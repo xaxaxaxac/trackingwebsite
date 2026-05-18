@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRACKERCLUB | Case Profile</title>
+    <title>TrackerClub | Case Profile</title>
     <style>
         :root {
-            --bg-main: #060608;
-            --bg-card: #0d0d11;
+            --bg-main: #050507;
+            --bg-card: rgba(13, 13, 18, 0.45);
             --accent: #ffe600;
             --text-main: #ffffff;
-            --text-muted: #6c6c7a;
-            --border: #1a1a24;
+            --text-muted: #717182;
+            --border: rgba(255, 255, 255, 0.04);
             --status-ban: #ff3b3b;
         }
 
@@ -24,6 +24,7 @@
 
         body {
             background-color: var(--bg-main);
+            background-image: radial-gradient(circle at 50% 10%, rgba(255, 230, 0, 0.01) 0%, transparent 50%);
             color: var(--text-main);
             padding: 40px 20px;
             display: flex;
@@ -40,13 +41,14 @@
             gap: 24px;
             opacity: 0;
             transform: translateY(10px);
-            animation: loadIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: loadIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         @keyframes loadIn {
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Liquid Glass Назад кнопка */
         .back-link {
             color: var(--text-main);
             text-decoration: none;
@@ -54,25 +56,33 @@
             font-weight: 600;
             background: var(--bg-card);
             border: 1px solid var(--border);
+            backdrop-filter: blur(12px);
             padding: 12px 22px;
-            border-radius: 10px;
+            border-radius: 12px;
             align-self: flex-start;
-            transition: background 0.2s, border-color 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.03);
         }
 
         .back-link:hover {
-            background: #12121a;
-            border-color: #2a2a3d;
+            background: rgba(255, 230, 0, 0.02);
+            border-color: rgba(255, 230, 0, 0.2);
+            box-shadow: 0 0 15px rgba(255, 230, 0, 0.03);
         }
 
-        .profile-wrapper {
+        /* Liquid Glass Контейнеры */
+        .profile-wrapper, .content-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-radius: 16px;
             padding: 36px;
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.04), 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .content-card {
+            padding: 28px;
         }
 
         .badge-container {
@@ -82,7 +92,7 @@
         }
 
         .tag-meta {
-            background: #14141f;
+            background: rgba(20, 20, 31, 0.6);
             border: 1px solid var(--border);
             padding: 5px 14px;
             border-radius: 8px;
@@ -96,13 +106,15 @@
             color: var(--status-ban);
             border-color: rgba(255, 59, 59, 0.15);
             font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .player-identity {
             font-size: 42px;
             font-weight: 800;
             margin-bottom: 28px;
-            letter-spacing: -0.5px;
+            letter-spacing: -1px;
         }
 
         .grid-meta {
@@ -133,15 +145,8 @@
             color: #e1e1e6;
         }
 
-        .content-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 28px;
-        }
-
         .card-header-title {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -155,23 +160,18 @@
             color: #d1d1d6;
         }
 
+        /* Видео контейнер */
         .video-viewport {
             width: 100%;
-            background: #000000;
+            background: rgba(0, 0, 0, 0.2);
             border-radius: 12px;
-            overflow: hidden;
             border: 1px solid var(--border);
-            aspect-ratio: 16 / 9;
+            min-height: 300px;
             display: flex;
             justify-content: center;
             align-items: center;
-        }
-
-        .native-video-core {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            outline: none;
+            padding: 10px;
+            overflow: hidden;
         }
 
         .system-notice {
@@ -185,14 +185,13 @@
 <body>
 
     <div class="container" id="profileRoot">
-        <a href="index.html" class="back-link">Return to Core Registry</a>
+        <a href="index.html" class="back-link">← Back to Database</a>
         <div class="profile-wrapper">
             <div class="system-notice">Resolving structural profile parameters...</div>
         </div>
     </div>
 
     <script>
-        // Исправлен путь к вашему репозиторию
         const REPO_PATH = "xaxaxaxac/trackingwebsite"; 
 
         function fetchToken(key) {
@@ -204,7 +203,7 @@
             const view = document.getElementById("profileRoot");
 
             if (!targetUid) {
-                view.innerHTML = `<div class="profile-wrapper"><div class="system-notice" style="color:var(--status-ban);">Routing execution halted. Parameter token undefined.</div></div>`;
+                view.innerHTML = `<div class="profile-wrapper"><div class="system-notice" style="color:var(--status-ban);">Routing execution halted. ID parameter missing.</div></div>`;
                 return;
             }
 
@@ -219,40 +218,45 @@
 
                 if (!node) {
                     view.innerHTML = `
-                        <a href="index.html" class="back-link">Return to Core Registry</a>
+                        <a href="index.html" class="back-link">← Back to Database</a>
                         <div class="profile-wrapper">
                             <div class="system-notice" style="color:var(--status-ban); font-weight:600;">RECORD EXPIRED OR NOT FOUND INSIDE DATABASE REGISTRY.</div>
                         </div>`;
                     return;
                 }
 
-                // Преобразование ссылки Telegram в прямой стрим-поток для обхода ошибки браузера
-                let webStreamLink = "";
+                // Логика выделения параметров канала и ID поста для нативного виджета Telegram
+                let tgChannel = "";
+                let tgPostId = "";
                 if (node.video_url) {
-                    const baseline = node.video_url.split('?')[0];
-                    const fragments = baseline.split('t.me/');
-                    if (fragments.length > 1) {
-                        webStreamLink = `https://t.me/v/${fragments[1]}?embed=1`;
+                    const cleanUrl = node.video_url.split('?')[0];
+                    const parts = cleanUrl.split('t.me/');
+                    if (parts.length > 1) {
+                        const pathSegments = parts[1].split('/');
+                        if (pathSegments.length >= 2) {
+                            tgChannel = pathSegments[0];
+                            tgPostId = pathSegments[1];
+                        }
                     }
                 }
 
                 view.innerHTML = `
-                    <a href="index.html" class="back-link">← Return to Core Registry</a>
+                    <a href="index.html" class="back-link">← Back to Database</a>
                     
                     <div class="profile-wrapper">
                         <div class="badge-container">
-                            <div class="tag-meta">#${targetUid.substring(0,8).toUpperCase()}</div>
+                            <div class="tag-meta">#${targetUid.toUpperCase()}</div>
                             <div class="tag-meta critical">Banned</div>
                         </div>
                         <div class="player-identity">${node.roblox_id || 'Unknown Terminal'}</div>
                         
                         <div class="grid-meta">
                             <div class="meta-block">
-                                <div class="meta-label">Target System</div>
-                                <div class="meta-value">Roblox Platform</div>
+                                <div class="meta-label">Platform</div>
+                                <div class="meta-value">Roblox</div>
                             </div>
                             <div class="meta-block">
-                                <div class="meta-label">Logging Timestamp</div>
+                                <div class="meta-label">Logged Date</div>
                                 <div class="meta-value">${node.date || 'Not Appended'}</div>
                             </div>
                             <div class="meta-block">
@@ -268,17 +272,26 @@
                     </div>
 
                     <div class="content-card">
-                        <div class="card-header-title">Direct Evidence Stream</div>
-                        <div class="video-viewport">
-                            ${webStreamLink ? `
-                                <video class="native-video-core" controls preload="metadata" playsinline>
-                                    <source src="${webStreamLink}" type="video/mp4">
-                                    Your environment lacks native video runtime modules.
-                                </video>
-                            ` : `<div class="system-notice">No external telemetry capture attached to record.</div>`}
+                        <div class="card-header-title">Evidence Video Stream</div>
+                        <div class="video-viewport" id="videoContainer">
+                            <div class="system-notice">No external telemetry capture attached to record.</div>
                         </div>
                     </div>
                 `;
+
+                // Динамическая инъекция скрипта виджета во избежание CORS и "Media not supported"
+                if (tgChannel && tgPostId) {
+                    const videoContainer = document.getElementById("videoContainer");
+                    videoContainer.innerHTML = ""; // Очищаем заглушку
+
+                    const script = document.createElement("script");
+                    script.src = "https://telegram.org/js/telegram-widget.js?22";
+                    script.setAttribute("data-telegram-post", `${tgChannel}/${tgPostId}`);
+                    script.setAttribute("data-width", "100%");
+                    script.setAttribute("data-dark", "1");
+                    
+                    videoContainer.appendChild(script);
+                }
 
             } catch (err) {
                 console.error(err);
