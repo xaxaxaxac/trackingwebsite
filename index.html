@@ -37,6 +37,17 @@
         .container {
             width: 100%;
             max-width: 1000px;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInPage 0.4s ease forward s;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes fadeInPage {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .header {
@@ -132,6 +143,12 @@
             border: 1px solid var(--border);
             padding: 24px;
             border-radius: 12px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            border-color: #2a2a38;
         }
 
         .stat-num {
@@ -166,6 +183,11 @@
             color: var(--text-main);
             font-size: 14px;
             outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent);
         }
 
         .table-container {
@@ -195,6 +217,7 @@
             font-size: 14px;
             border-bottom: 1px solid var(--border);
             color: #e1e1e6;
+            transition: background 0.2s;
         }
 
         tr:last-child td {
@@ -203,7 +226,6 @@
 
         tr {
             cursor: pointer;
-            transition: background 0.2s;
         }
 
         tr:hover td {
@@ -263,15 +285,15 @@
 
         <div class="stats-grid">
             <div class="stat-card">
-                <div class="stat-num" id="totalCount">0</div>
+                <div class="stat-num" id="totalCount" data-target="0">0</div>
                 <div class="stat-label">Total Records</div>
             </div>
             <div class="stat-card">
-                <div class="stat-num" style="color: var(--status-ban);" id="bannedCount">0</div>
+                <div class="stat-num" style="color: var(--status-ban);" id="bannedCount" data-target="0">0</div>
                 <div class="stat-label">Banned</div>
             </div>
             <div class="stat-card">
-                <div class="stat-num" style="color: var(--status-susp);" id="suspCount">0</div>
+                <div class="stat-num" style="color: var(--status-susp);" id="suspCount" data-target="0">0</div>
                 <div class="stat-label">Suspicious</div>
             </div>
         </div>
@@ -303,6 +325,31 @@
     <script>
         const REPO_PATH = "xaxaxaxac/trackingwebsite"; 
         
+        function animateCounters() {
+            const counters = [
+                document.getElementById("totalCount"),
+                document.getElementById("bannedCount"),
+                document.getElementById("suspCount")
+            ];
+            
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'), 10);
+                if(target === 0) return;
+                
+                let current = 0;
+                const increment = Math.ceil(target / 20);
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        counter.innerText = target;
+                        clearInterval(timer);
+                    } else {
+                        counter.innerText = current;
+                    }
+                }, 30);
+            });
+        }
+
         async function loadDatabase() {
             const tbody = document.getElementById("tableBody");
             const cacheBuster = Math.random().toString(36).substring(2, 15);
@@ -325,9 +372,12 @@
             
             const keys = Object.keys(data).reverse();
             
-            document.getElementById("totalCount").innerText = keys.length;
-            document.getElementById("bannedCount").innerText = keys.length;
-            document.getElementById("suspCount").innerText = "0";
+            document.getElementById("totalCount").setAttribute('data-target', keys.length);
+            document.getElementById("bannedCount").setAttribute('data-target', keys.length);
+            document.getElementById("suspCount").setAttribute('data-target', 0);
+            
+            // Trigger numbers build animation
+            animateCounters();
 
             if (keys.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="5" class="status-msg">No logs found inside database registry.</td></tr>`;
