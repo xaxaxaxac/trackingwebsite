@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CHEATDEX | Record Profile</title>
+    <title>TRACKERCLUB | Case Profile</title>
     <style>
         :root {
             --bg-main: #060608;
@@ -37,127 +37,128 @@
             max-width: 850px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 24px;
             opacity: 0;
             transform: translateY(10px);
-            animation: fadeInPage 0.4s ease forwards;
+            animation: loadIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        @keyframes fadeInPage {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes loadIn {
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .back-btn {
+        .back-link {
             color: var(--text-main);
             text-decoration: none;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             background: var(--bg-card);
             border: 1px solid var(--border);
-            padding: 10px 18px;
-            border-radius: 8px;
+            padding: 12px 22px;
+            border-radius: 10px;
             align-self: flex-start;
             transition: background 0.2s, border-color 0.2s;
-        }
-
-        .back-btn:hover {
-            background: #111116;
-            border-color: #2a2a38;
-        }
-
-        .profile-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 32px;
-            position: relative;
-        }
-
-        .badge-row {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 16px;
-        }
-
-        .badge {
-            background: #15151f;
-            border: 1px solid var(--border);
-            padding: 4px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        .badge.danger {
-            background: rgba(255, 59, 59, 0.1);
-            color: var(--status-ban);
-            border-color: rgba(255, 59, 59, 0.2);
-            font-weight: 600;
-        }
-
-        .username {
-            font-size: 38px;
-            font-weight: 800;
-            margin-bottom: 24px;
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-            border-top: 1px solid var(--border);
-            padding-top: 20px;
-        }
-
-        .info-item {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .info-label {
-            font-size: 11px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .info-val {
-            font-size: 15px;
-            font-weight: 600;
-        }
-
-        .section-box {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 24px;
-        }
-
-        .section-title {
-            font-size: 12px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .section-body {
+        .back-link:hover {
+            background: #12121a;
+            border-color: #2a2a3d;
+        }
+
+        .profile-wrapper {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 36px;
+        }
+
+        .badge-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tag-meta {
+            background: #14141f;
+            border: 1px solid var(--border);
+            padding: 5px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #a3a3b3;
+            font-family: monospace;
+        }
+
+        .tag-meta.critical {
+            background: rgba(255, 59, 59, 0.08);
+            color: var(--status-ban);
+            border-color: rgba(255, 59, 59, 0.15);
+            font-weight: 700;
+        }
+
+        .player-identity {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 28px;
+            letter-spacing: -0.5px;
+        }
+
+        .grid-meta {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            border-top: 1px solid var(--border);
+            padding-top: 24px;
+        }
+
+        .meta-block {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .meta-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-weight: 600;
+        }
+
+        .meta-value {
             font-size: 15px;
-            line-height: 1.6;
+            font-weight: 600;
             color: #e1e1e6;
         }
 
-        .video-box-container {
+        .content-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+        }
+
+        .card-header-title {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        .card-text-body {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #d1d1d6;
+        }
+
+        .video-viewport {
             width: 100%;
             background: #000000;
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
             border: 1px solid var(--border);
             aspect-ratio: 16 / 9;
@@ -166,121 +167,126 @@
             align-items: center;
         }
 
-        .native-video-player {
+        .native-video-core {
             width: 100%;
             height: 100%;
             object-fit: contain;
             outline: none;
         }
 
-        .loading-text {
+        .system-notice {
             text-align: center;
             padding: 40px;
             color: var(--text-muted);
-            font-size: 15px;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
 
-    <div class="container" id="mainContainer">
-        <a href="index.html" class="back-btn">Back to Registry</a>
-        
-        <div class="profile-card">
-            <div class="loading-text">Loading structured record metadata...</div>
+    <div class="container" id="profileRoot">
+        <a href="index.html" class="back-link">Return to Core Registry</a>
+        <div class="profile-wrapper">
+            <div class="system-notice">Resolving structural profile parameters...</div>
         </div>
     </div>
 
     <script>
+        // Исправлен путь к вашему репозиторию
         const REPO_PATH = "xaxaxaxac/trackingwebsite"; 
 
-        function getQueryParam(param) {
-            return new URLSearchParams(window.location.search).get(param);
+        function fetchToken(key) {
+            return new URLSearchParams(window.location.search).get(key);
         }
 
-        async function loadPlayer() {
-            const recordId = getQueryParam("id");
-            const container = document.getElementById("mainContainer");
+        async function loadProfileNode() {
+            const targetUid = fetchToken("id");
+            const view = document.getElementById("profileRoot");
 
-            if (!recordId) {
-                container.innerHTML = `<div class="profile-card"><div class="loading-text" style="color:var(--status-ban);">Error: Record ID parameter missing from URL.</div></div>`;
+            if (!targetUid) {
+                view.innerHTML = `<div class="profile-wrapper"><div class="system-notice" style="color:var(--status-ban);">Routing execution halted. Parameter token undefined.</div></div>`;
                 return;
             }
 
-            const cacheBuster = Math.random().toString(36).substring(2, 15);
-            const dbUrl = `https://raw.githubusercontent.com/${REPO_PATH}/main/database.json?v=${cacheBuster}`;
+            const salt = Math.random().toString(36).substring(2, 15);
+            const targetUrl = `https://raw.githubusercontent.com/${REPO_PATH}/main/database.json?cache=${salt}`;
 
             try {
-                const response = await fetch(dbUrl);
-                if (!response.ok) throw new Error("Read error");
-                const db = await response.json();
-                const record = db[recordId];
+                const res = await fetch(targetUrl);
+                if (!res.ok) throw new Error("Fetch failed");
+                const map = await res.json();
+                const node = map[targetUid];
 
-                if (!record) {
-                    container.innerHTML = `<a href="index.html" class="back-btn">Back to Registry</a><div class="profile-card"><div class="loading-text" style="color:var(--status-ban);">RECORD EXPIRED OR NOT FOUND INSIDE DATABASE REGISTRY.</div></div>`;
+                if (!node) {
+                    view.innerHTML = `
+                        <a href="index.html" class="back-link">Return to Core Registry</a>
+                        <div class="profile-wrapper">
+                            <div class="system-notice" style="color:var(--status-ban); font-weight:600;">RECORD EXPIRED OR NOT FOUND INSIDE DATABASE REGISTRY.</div>
+                        </div>`;
                     return;
                 }
 
-                let directCdnStreamUrl = "";
-                if (record.video_url) {
-                    const cleanUrl = record.video_url.split('?')[0];
-                    const parts = cleanUrl.split('t.me/');
-                    if (parts.length > 1) {
-                        directCdnStreamUrl = `https://t.me/v/${parts[1]}?embed=1`;
+                // Преобразование ссылки Telegram в прямой стрим-поток для обхода ошибки браузера
+                let webStreamLink = "";
+                if (node.video_url) {
+                    const baseline = node.video_url.split('?')[0];
+                    const fragments = baseline.split('t.me/');
+                    if (fragments.length > 1) {
+                        webStreamLink = `https://t.me/v/${fragments[1]}?embed=1`;
                     }
                 }
 
-                container.innerHTML = `
-                    <a href="index.html" class="back-btn">Back to Registry</a>
+                view.innerHTML = `
+                    <a href="index.html" class="back-link">← Return to Core Registry</a>
                     
-                    <div class="profile-card">
-                        <div class="badge-row">
-                            <div class="badge">#${recordId.substring(0,8)}</div>
-                            <div class="badge danger">Banned</div>
+                    <div class="profile-wrapper">
+                        <div class="badge-container">
+                            <div class="tag-meta">#${targetUid.substring(0,8).toUpperCase()}</div>
+                            <div class="tag-meta critical">Banned</div>
                         </div>
-                        <div class="username">${record.roblox_id || 'Unknown ID'}</div>
+                        <div class="player-identity">${node.roblox_id || 'Unknown Terminal'}</div>
                         
-                        <div class="info-grid">
-                            <div class="info-item">
-                                <div class="info-label">Platform</div>
-                                <div class="info-val">Roblox</div>
+                        <div class="grid-meta">
+                            <div class="meta-block">
+                                <div class="meta-label">Target System</div>
+                                <div class="meta-value">Roblox Platform</div>
                             </div>
-                            <div class="info-item">
-                                <div class="info-label">Date and Time</div>
-                                <div class="info-val">${record.date || 'Unknown'}</div>
+                            <div class="meta-block">
+                                <div class="meta-label">Logging Timestamp</div>
+                                <div class="meta-value">${node.date || 'Not Appended'}</div>
                             </div>
-                            <div class="info-item">
-                                <div class="info-label">Moderator</div>
-                                <div class="info-val" style="color: var(--accent);">@${record.discord_name || 'System'}</div>
+                            <div class="meta-block">
+                                <div class="meta-label">Authorized Mod</div>
+                                <div class="meta-value" style="color: var(--accent);">@${node.discord_name || 'System'}</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="section-box">
-                        <div class="section-title">Violation Description</div>
-                        <div class="section-body">${record.reason || 'No violation description provided.'}</div>
+                    <div class="content-card">
+                        <div class="card-header-title">Violation Narrative</div>
+                        <div class="card-text-body">${node.reason || 'No descriptive logs compiled for this operational hash.'}</div>
                     </div>
 
-                    <div class="section-box">
-                        <div class="section-title">Evidence Video Stream</div>
-                        <div class="video-box-container">
-                            ${directCdnStreamUrl ? `
-                                <video class="native-video-player" controls preload="metadata" playsinline>
-                                    <source src="${directCdnStreamUrl}" type="video/mp4">
-                                    Your browser does not support native video playback.
+                    <div class="content-card">
+                        <div class="card-header-title">Direct Evidence Stream</div>
+                        <div class="video-viewport">
+                            ${webStreamLink ? `
+                                <video class="native-video-core" controls preload="metadata" playsinline>
+                                    <source src="${webStreamLink}" type="video/mp4">
+                                    Your environment lacks native video runtime modules.
                                 </video>
-                            ` : `<div class="loading-text">No evidence file associated with this entry.</div>`}
+                            ` : `<div class="system-notice">No external telemetry capture attached to record.</div>`}
                         </div>
                     </div>
                 `;
 
-            } catch (e) {
-                console.error(e);
-                container.innerHTML = `<div class="profile-card"><div class="loading-text" style="color:var(--status-ban);">Error established connecting to remote GitHub data stream.</div></div>`;
+            } catch (err) {
+                console.error(err);
+                view.innerHTML = `<div class="profile-wrapper"><div class="system-notice" style="color:var(--status-ban);">Fatal connection interface rupture. Cloud data unobtainable.</div></div>`;
             }
         }
 
-        window.onload = loadPlayer;
+        window.onload = loadProfileNode;
     </script>
 </body>
 </html>
