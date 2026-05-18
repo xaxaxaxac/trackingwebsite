@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TrackerClub | Cheater Leaderboard</title>
+    
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
     <style>
         :root {
             --bg-main: #050507;
@@ -265,7 +268,7 @@
             font-size: 14px;
             border-bottom: 1px solid var(--border);
             color: #e1e1e6;
-            transition: background 0.2s, cubic-bezier(0.16, 1, 0.3, 1);
+            transition: background 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         tr:last-child td {
@@ -442,7 +445,9 @@
                 const node = entries[uid];
                 const tr = document.createElement("tr");
                 tr.className = "data-row";
-                tr.onclick = () => window.location.href = `player.html?id=${uid}`;
+                
+                // Перенаправление на чистый красивый адрес /player без расширения .html
+                tr.onclick = () => window.location.href = `/player?id=${uid}`;
                 tr.setAttribute("data-search-token", String(node.roblox_id || '').toLowerCase());
                 
                 tr.innerHTML = `
