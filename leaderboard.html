@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TrackerClub | Cheater Leaderboard</title>
+    <title>TrackerClub</title>
     
     <link rel="icon" type="image/png" href="/favicon.png">
     
@@ -67,18 +67,13 @@
             gap: 10px;
         }
 
+        /* Обновленные стили для картинки-логотипа */
         .logo-icon {
-            background: linear-gradient(135deg, var(--accent), #ccb800);
-            color: #000;
             width: 34px;
             height: 34px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            object-fit: contain;
             border-radius: 8px;
-            font-weight: 900;
-            font-size: 16px;
-            box-shadow: 0 0 20px rgba(255, 230, 0, 0.2);
+            filter: drop-shadow(0 0 15px rgba(255, 230, 0, 0.25));
         }
 
         .logo-text {
@@ -145,7 +140,6 @@
             margin-bottom: 40px;
         }
 
-        /* Liquid Glass Сетка Карточек */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -185,7 +179,6 @@
             font-weight: 600;
         }
 
-        /* Liquid Glass Кнопки и Сортировка */
         .filter-bar {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -236,7 +229,6 @@
             border-color: rgba(255, 230, 0, 0.3);
         }
 
-        /* Таблица Нарушителей */
         .table-container {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -324,7 +316,7 @@
     <div class="container">
         <div class="header">
             <div class="logo-area">
-                <div class="logo-icon">T</div>
+                <img src="/logo.png" alt="TrackerClub Logo" class="logo-icon">
                 <div class="logo-text">TrackerClub <span>Evidence Leaderboard</span></div>
             </div>
             <div class="live-indicator">
@@ -446,7 +438,7 @@
                 const tr = document.createElement("tr");
                 tr.className = "data-row";
                 
-                // Перенаправление на чистый красивый адрес /player без расширения .html
+                // Перенаправление на чистый адрес Vercel
                 tr.onclick = () => window.location.href = `/player?id=${uid}`;
                 tr.setAttribute("data-search-token", String(node.roblox_id || '').toLowerCase());
                 
