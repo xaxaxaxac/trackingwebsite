@@ -3,16 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TrackerClub</title>
-    
+    <title>TrackerClub | Evidence Leaderboard</title>
     <link rel="icon" type="image/png" href="/favicon.png">
-    
     <style>
         :root {
             --bg-main: #050507;
             --bg-card: rgba(13, 13, 18, 0.45);
             --bg-input: rgba(19, 19, 28, 0.5);
-            --glass-glow: rgba(255, 230, 0, 0.03);
             --accent: #ffe600;
             --text-main: #ffffff;
             --text-muted: #717182;
@@ -21,314 +18,60 @@
             --status-ban: #ff3b3b;
             --status-review: #ffb700;
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-main);
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(255, 230, 0, 0.015) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(255, 59, 59, 0.01) 0%, transparent 40%);
-            color: var(--text-main);
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1100px;
-            opacity: 0;
-            transform: translateY(15px);
-            animation: fadeInPage 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        @keyframes fadeInPage {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
-        }
-
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        /* Обновленные стили для картинки-логотипа */
-        .logo-icon {
-            width: 34px;
-            height: 34px;
-            object-fit: contain;
-            border-radius: 8px;
-            filter: drop-shadow(0 0 15px rgba(255, 230, 0, 0.25));
-        }
-
-        .logo-text {
-            font-size: 20px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-        }
-
-        .logo-text span {
-            display: block;
-            font-size: 10px;
-            color: var(--text-muted);
-            font-weight: 400;
-            margin-top: -2px;
-            text-transform: uppercase;
-        }
-
-        .live-indicator {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            backdrop-filter: blur(12px);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 11px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #a3a3b3;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .live-dot {
-            width: 6px;
-            height: 6px;
-            background: #ffe600;
-            border-radius: 50%;
-            box-shadow: 0 0 8px #ffe600;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 0.3; }
-            50% { opacity: 1; }
-            100% { opacity: 0.3; }
-        }
-
-        h1 {
-            font-size: 44px;
-            font-weight: 800;
-            margin-bottom: 8px;
-            letter-spacing: -1px;
-        }
-
-        h1 span {
-            color: var(--accent);
-        }
-
-        .description {
-            color: var(--text-muted);
-            font-size: 15px;
-            max-width: 550px;
-            line-height: 1.6;
-            margin-bottom: 40px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-
-        .stat-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            padding: 24px;
-            border-radius: 16px;
-            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0, 0, 0, 0.2);
-            transition: border-color 0.4s, transform 0.4s, box-shadow 0.4s;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-3px);
-            border-color: var(--border-hover);
-            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.07), 0 15px 35px rgba(255, 230, 0, 0.03);
-        }
-
-        .stat-num {
-            font-size: 40px;
-            font-weight: 800;
-            margin-bottom: 4px;
-            font-variant-numeric: tabular-nums;
-        }
-
-        .stat-label {
-            font-size: 11px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 600;
-        }
-
-        .filter-bar {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            backdrop-filter: blur(16px);
-            padding: 14px;
-            border-radius: 16px;
-            display: flex;
-            gap: 14px;
-            margin-bottom: 24px;
-            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.03);
-        }
-
-        .search-wrapper {
-            flex: 1;
-        }
-
-        .search-input {
-            width: 100%;
-            background: var(--bg-input);
-            border: 1px solid var(--border);
-            padding: 12px 20px;
-            border-radius: 12px;
-            color: var(--text-main);
-            font-size: 14px;
-            outline: none;
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-
-        .search-input:focus {
-            border-color: rgba(255, 230, 0, 0.3);
-            box-shadow: 0 0 15px rgba(255, 230, 0, 0.05);
-        }
-
-        .select-custom {
-            background: var(--bg-input);
-            border: 1px solid var(--border);
-            color: var(--text-main);
-            padding: 0 20px;
-            border-radius: 12px;
-            font-size: 14px;
-            outline: none;
-            cursor: pointer;
-            min-width: 160px;
-            transition: border-color 0.3s;
-        }
-
-        .select-custom:focus {
-            border-color: rgba(255, 230, 0, 0.3);
-        }
-
-        .table-container {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            backdrop-filter: blur(16px);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.03);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-        }
-
-        th {
-            padding: 18px 24px;
-            font-size: 11px;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            letter-spacing: 1px;
-            font-weight: 700;
-            border-bottom: 1px solid var(--border);
-            background: rgba(5, 5, 7, 0.3);
-        }
-
-        td {
-            padding: 18px 24px;
-            font-size: 14px;
-            border-bottom: 1px solid var(--border);
-            color: #e1e1e6;
-            transition: background 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        tr.data-row {
-            cursor: pointer;
-        }
-
-        tr.data-row:hover td {
-            background: rgba(255, 230, 0, 0.02);
-        }
-
-        .user-td {
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 5px 14px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            background: rgba(255, 59, 59, 0.08);
-            color: var(--status-ban);
-            border: 1px solid rgba(255, 59, 59, 0.15);
-        }
-
-        .status-badge::before {
-            content: '';
-            width: 5px;
-            height: 5px;
-            background: currentColor;
-            border-radius: 50%;
-        }
-
-        .status-msg {
-            text-align: center;
-            padding: 50px;
-            color: var(--text-muted);
-            font-size: 14px;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        body { background-color: var(--bg-main); background-image: radial-gradient(circle at 10% 20%, rgba(255, 230, 0, 0.015) 0%, transparent 40%), radial-gradient(circle at 90% 80%, rgba(255, 59, 59, 0.01) 0%, transparent 40%); color: var(--text-main); padding: 40px 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        .container { width: 100%; max-width: 1100px; opacity: 0; transform: translateY(15px); animation: fadeInPage 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        @keyframes fadeInPage { to { opacity: 1; transform: translateY(0); } }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+        .logo-area { display: flex; align-items: center; gap: 10px; }
+        .logo-icon { width: 34px; height: 34px; object-fit: contain; border-radius: 8px; filter: drop-shadow(0 0 15px rgba(255, 230, 0, 0.25)); }
+        .logo-text { font-size: 20px; font-weight: 800; letter-spacing: 0.5px; }
+        .logo-text span { display: block; font-size: 10px; color: var(--text-muted); font-weight: 400; margin-top: -2px; text-transform: uppercase; }
+        .live-indicator { background: var(--bg-card); border: 1px solid var(--border); backdrop-filter: blur(12px); padding: 6px 14px; border-radius: 20px; font-size: 11px; display: flex; align-items: center; gap: 8px; color: #a3a3b3; text-transform: uppercase; letter-spacing: 0.5px; }
+        .live-dot { width: 6px; height: 6px; background: #ffe600; border-radius: 50%; box-shadow: 0 0 8px #ffe600; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
+        h1 { font-size: 44px; font-weight: 800; margin-bottom: 8px; letter-spacing: -1px; }
+        h1 span { color: var(--accent); }
+        .description { color: var(--text-muted); font-size: 15px; max-width: 550px; line-height: 1.6; margin-bottom: 40px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px; }
+        .stat-card { background: var(--bg-card); border: 1px solid var(--border); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); padding: 24px; border-radius: 16px; box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0, 0, 0, 0.2); transition: border-color 0.4s, transform 0.4s, box-shadow 0.4s; }
+        .stat-card:hover { transform: translateY(-3px); border-color: var(--border-hover); box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.07), 0 15px 35px rgba(255, 230, 0, 0.03); }
+        .stat-num { font-size: 40px; font-weight: 800; margin-bottom: 4px; font-variant-numeric: tabular-nums; }
+        .stat-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+        .filter-bar { background: var(--bg-card); border: 1px solid var(--border); backdrop-filter: blur(16px); padding: 14px; border-radius: 16px; display: flex; gap: 14px; margin-bottom: 24px; box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.03); }
+        .search-wrapper { flex: 1; }
+        .search-input { width: 100%; background: var(--bg-input); border: 1px solid var(--border); padding: 12px 20px; border-radius: 12px; color: var(--text-main); font-size: 14px; outline: none; transition: border-color 0.3s, box-shadow 0.3s; }
+        .search-input:focus { border-color: rgba(255, 230, 0, 0.3); box-shadow: 0 0 15px rgba(255, 230, 0, 0.05); }
+        .select-custom { background: var(--bg-input); border: 1px solid var(--border); color: var(--text-main); padding: 0 20px; border-radius: 12px; font-size: 14px; outline: none; cursor: pointer; min-width: 160px; transition: border-color 0.3s; }
+        .select-custom:focus { border-color: rgba(255, 230, 0, 0.3); }
+        .table-container { background: var(--bg-card); border: 1px solid var(--border); backdrop-filter: blur(16px); border-radius: 16px; overflow: hidden; box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.03); }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th { padding: 18px 24px; font-size: 11px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; font-weight: 700; border-bottom: 1px solid var(--border); background: rgba(5, 5, 7, 0.3); }
+        td { padding: 18px 24px; font-size: 14px; border-bottom: 1px solid var(--border); color: #e1e1e6; transition: background 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        tr:last-child td { border-bottom: none; }
+        tr.data-row { cursor: pointer; }
+        tr.data-row:hover td { background: rgba(255, 230, 0, 0.02); }
+        .user-td { font-weight: 700; color: var(--text-main); }
+        .status-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; background: rgba(255, 59, 59, 0.08); color: var(--status-ban); border: 1px solid rgba(255, 59, 59, 0.15); }
+        .status-badge::before { content: ''; width: 5px; height: 5px; background: currentColor; border-radius: 50%; }
+        .status-msg { text-align: center; padding: 50px; color: var(--text-muted); font-size: 14px; }
     </style>
 </head>
 <body>
-
     <div class="container">
         <div class="header">
             <div class="logo-area">
-                <img src="/logo.png" alt="TrackerClub Logo" class="logo-icon">
+                <img src="/logo.png" alt="Logo" class="logo-icon">
                 <div class="logo-text">TrackerClub <span>Evidence Leaderboard</span></div>
             </div>
             <div class="live-indicator">
                 <div class="live-dot"></div> Registry Loaded
             </div>
         </div>
-
         <h1>Cheater <span>Leaderboard</span></h1>
         <div class="description">
-            Full database of detected cheaters. Click on a record to view detailed transaction data, notes, and attached video proof.
+            Internal database of logged offenses. Select a record to view contextual data and attached media evidence.
         </div>
-
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-num" id="totalCount" data-target="0">0</div>
@@ -343,7 +86,6 @@
                 <div class="stat-label">Under Review</div>
             </div>
         </div>
-
         <div class="filter-bar">
             <div class="search-wrapper">
                 <input type="text" id="searchInput" class="search-input" placeholder="Search by Roblox ID...">
@@ -353,7 +95,6 @@
                 <option value="banned">Banned</option>
             </select>
         </div>
-
         <div class="table-container">
             <table>
                 <thead>
@@ -373,20 +114,13 @@
             </table>
         </div>
     </div>
-
     <script>
         const REPO_PATH = "xaxaxaxac/trackingwebsite"; 
-        
         function runCounterAnimation() {
-            const elements = [
-                document.getElementById("totalCount"),
-                document.getElementById("bannedCount")
-            ];
-            
+            const elements = [document.getElementById("totalCount"), document.getElementById("bannedCount")];
             elements.forEach(el => {
                 const target = parseInt(el.getAttribute('data-target'), 10);
                 if (target === 0 || isNaN(target)) return;
-                
                 let count = 0;
                 const speed = Math.ceil(target / 20);
                 const loop = setInterval(() => {
@@ -394,65 +128,51 @@
                     if (count >= target) {
                         el.innerText = target;
                         clearInterval(loop);
-                    } else {
-                        el.innerText = count;
-                    }
+                    } else el.innerText = count;
                 }, 25);
             });
         }
-
         async function initializeRegistry() {
             const tbody = document.getElementById("tableBody");
             const salt = Math.random().toString(36).substring(2, 15);
             const endpoint = `https://raw.githubusercontent.com/${REPO_PATH}/main/database.json?cache=${salt}`;
-
             try {
                 const res = await fetch(endpoint);
-                if (!res.ok) throw new Error(`HTTP Error: ${res.status}`);
+                if (!res.ok) throw new Error();
                 const payload = await res.json();
                 renderEntries(payload);
             } catch (err) {
-                console.error("Fetch failure: ", err);
-                tbody.innerHTML = `<tr><td colspan="5" class="status-msg" style="color: var(--status-ban); font-weight:600;">Failed to establish stream link to GitHub database. Check repository visibility.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" class="status-msg" style="color: var(--status-ban); font-weight:600;">Stream linkage failure.</td></tr>`;
             }
         }
-
         function renderEntries(entries) {
             const tbody = document.getElementById("tableBody");
             tbody.innerHTML = "";
-            
             const indexKeys = Object.keys(entries).reverse();
-            
             document.getElementById("totalCount").setAttribute('data-target', indexKeys.length);
             document.getElementById("bannedCount").setAttribute('data-target', indexKeys.length);
             document.getElementById("reviewCount").innerText = "0";
             runCounterAnimation();
-
             if (indexKeys.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="status-msg">No entries found inside database.json array.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" class="status-msg">No entries found.</td></tr>`;
                 return;
             }
-
             indexKeys.forEach(uid => {
                 const node = entries[uid];
                 const tr = document.createElement("tr");
                 tr.className = "data-row";
-                
-                // Перенаправление на чистый адрес Vercel
                 tr.onclick = () => window.location.href = `/player?id=${uid}`;
                 tr.setAttribute("data-search-token", String(node.roblox_id || '').toLowerCase());
-                
                 tr.innerHTML = `
                     <td style="color: var(--text-muted); font-family: monospace; font-size:13px;">#${uid.substring(0,8).toUpperCase()}</td>
                     <td class="user-td">${node.roblox_id || 'Malformed Data'}</td>
                     <td style="color: #a3a3b3;">${node.date || 'N/A'}</td>
-                    <td>${node.reason || 'No violation data appended'}</td>
+                    <td>${node.reason || 'No violation data'}</td>
                     <td><span class="status-badge">Banned</span></td>
                 `;
                 tbody.appendChild(tr);
             });
         }
-
         document.getElementById("searchInput").addEventListener("input", (e) => {
             const val = e.target.value.trim().toLowerCase();
             document.querySelectorAll(".data-row").forEach(row => {
@@ -460,7 +180,6 @@
                 row.style.display = match.includes(val) ? "table-row" : "none";
             });
         });
-
         window.onload = initializeRegistry;
     </script>
 </body>
